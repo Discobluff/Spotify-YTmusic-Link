@@ -42,4 +42,36 @@ def addTrackToPlaylist(playlistId : str, trackId : str):
     print("Statut de la réponse :", response.status_code)
     print("Contenu de la réponse :", response.text)
 
-addTrackToPlaylist("5PwOtSkiMYkAqnDZN45G6S", "2tpWsVSb9UEmDRxAl1zhX1")
+def getTrackIdByName(trackName : str, trackArtist : str):
+    searchQuery = trackName + " " + trackArtist
+    payload = {
+        "variables": {
+            "searchTerm": searchQuery,
+            "offset": 0,
+            "limit": 1,
+            "numberOfTopResults": 1,
+            "includeAudiobooks": False,
+            "includeArtistHasConcertsField": False,
+            "includePreReleases": False,
+            "includeAuthors": False
+        },
+        "operationName": "searchDesktop",
+        "extensions": {
+            "persistedQuery": {
+                "version": 1,
+                "sha256Hash": "3c9d3f60dac5dea3876b6db3f534192b1c1d90032c4233c1bbaba526db41eb31"
+            }
+        }
+    }
+    
+    headers = getHeaders()
+    response = requests.post(url, headers=headers, json=payload)
+
+    print("Statut de la réponse :", response.status_code)
+    
+    trackId = response.json()["data"]["searchV2"]["tracksV2"]["items"][0]["item"]["data"]["id"]
+    return trackId
+    
+if __name__ == "___main__":
+    # addTrackToPlaylist("5PwOtSkiMYkAqnDZN45G6S", "2tpWsVSb9UEmDRxAl1zhX1")
+    trackId = getTrackIdByName("counting stars", "one republic")
