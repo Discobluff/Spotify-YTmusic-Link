@@ -12,7 +12,17 @@ Clone this repository and install the dependencies:
 
 ### Activate Spotify API
 
-- Go to the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard), login and create a new application.
 
+### Activate YouTube Music API
+
+- Créer un projet sur [Google Cloud Console](https://console.cloud.google.com/)
+- Activer l'API YouTube Data v3 pour ce projet
+- Créer des identifiants d'API (clé API) pour ce projet et copier la clé API générée dans le .env
+
+**Les playlists doivent être au moins en non répertorié**
 
 ## Usage
+
+```bash
+python3 main.py
+```

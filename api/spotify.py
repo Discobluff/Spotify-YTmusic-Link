@@ -37,10 +37,7 @@ def addTrackToPlaylist(playlistId : str, trackId : str):
     }
 
     headers = getHeaders()
-    response = requests.post(url, headers=headers, json=payload)
-
-    print("Statut de la réponse :", response.status_code)
-    print("Contenu de la réponse :", response.text)
+    requests.post(url, headers=headers, json=payload)
 
 def getTrackIdByName(trackName : str, trackArtist : str):
     searchQuery = trackName + " " + trackArtist
@@ -48,12 +45,12 @@ def getTrackIdByName(trackName : str, trackArtist : str):
         "variables": {
             "searchTerm": searchQuery,
             "offset": 0,
-            "limit": 1,
-            "numberOfTopResults": 1,
+            "limit": 10,
+            "numberOfTopResults": 5,
             "includeAudiobooks": False,
-            "includeArtistHasConcertsField": False,
-            "includePreReleases": False,
-            "includeAuthors": False
+            "includeArtistHasConcertsField": True,
+            "includePreReleases": True,
+            "includeAuthors": True
         },
         "operationName": "searchDesktop",
         "extensions": {
@@ -67,8 +64,6 @@ def getTrackIdByName(trackName : str, trackArtist : str):
     headers = getHeaders()
     response = requests.post(url, headers=headers, json=payload)
 
-    print("Statut de la réponse :", response.status_code)
-    
     trackId = response.json()["data"]["searchV2"]["tracksV2"]["items"][0]["item"]["data"]["id"]
     return trackId
     
